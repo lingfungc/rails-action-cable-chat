@@ -1,0 +1,21 @@
+<div class="container chatroom-index my-3">
+
+  <% @chatrooms.each do |chatroom| %>
+    <div class="my-5 border-bottom">
+      <%= link_to chatroom_path(chatroom) do %>
+        <h1>#<%= chatroom.name %></h1>
+        <% if chatroom.messages.last %>
+          <small>
+            <p><%= chatroom.messages.last %></p>
+            <i><%= chatroom.messages.last.created_at.strftime("%a %b %e at %l:%M %p") %></i>
+          </small>
+        <% else %>
+          <small>
+            <p>There is no message ...</p>
+          </small>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>
