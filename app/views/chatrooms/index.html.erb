@@ -6,8 +6,7 @@
         <h1>#<%= chatroom.name %></h1>
         <% if chatroom.messages.last %>
           <small>
-            <p><%= chatroom.messages.last %></p>
-            <i><%= chatroom.messages.last.created_at.strftime("%a %b %e at %l:%M %p") %></i>
+            <p><%= chatroom.messages.last.content %><i> <%= chatroom.messages.last.created_at.strftime("%a %b %e at %l:%M %p") %></i></p>
           </small>
         <% else %>
           <small>

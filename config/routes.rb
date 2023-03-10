@@ -8,5 +8,7 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
 
-  resources :chatrooms, only: [:index, :show]
+  resources :chatrooms, only: [:index, :show] do
+    resources :messages, only: :create
+  end
 end
