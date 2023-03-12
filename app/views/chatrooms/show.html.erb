@@ -1,4 +1,4 @@
-<div class="container chatroom my-3" data-controller="chatroom-subscription" data-chatroom-subscription-chatroom-id-value="<%= @chatroom.id %>">
+<div class="container chatroom my-3" data-controller="chatroom-subscription" data-chatroom-subscription-chatroom-id-value="<%= @chatroom.id %>" data-chatroom-subscription-current-user-id-value="<%= current_user.id %>">
 
   <%= link_to "< Back", :back, class: "back-btn" %>
 
@@ -6,11 +6,15 @@
 
   <div class="messages" data-chatroom-subscription-target="messages">
     <% @chatroom.messages.each do |message| %>
-      <%= render "messages/message", message: message %>
+      <div class="message-row d-flex <%= message.sender?(current_user) ? 'justify-content-end' : 'justify-content-start' %>">
+        <div class="<%= message.sender?(current_user) ? 'sender-style' : 'receiver-style' %>">
+          <%= render "messages/message", message: message %>
+        </div>
+      </div>
     <% end %>
   </div>
 
-  <%= simple_form_for [@chatroom, @message], html: { data: { action: "submit->chatroom-subscriptions#resetForm" }, class: "d-flex" } do |f| %>
+  <%= simple_form_for [@chatroom, @message], html: { data: { action: "turbo:submit-end->chatroom-subscription#resetForm" }, class: "d-flex" } do |f| %>
     <%= f.input :content,
                 label: false,
                 placeholder: "Message ##{@chatroom.name}",
