@@ -5,7 +5,12 @@ class MessagesController < ApplicationController
     @message.chatroom = @chatroom
     @message.user = current_user
     if @message.save
-      redirect_to chatroom_path(@chatroom)
+      # * This new saved message will be sent to Chatroom Sunscriptions Controller as Received Data
+      ChatroomChannel.broadcast_to(
+        @chatroom,
+        render_to_string(partial: "message", locals: { message: @message })
+      )
+      head :ok
     else
       render "chatrooms/show", status: :unprocessable_entity
     end
